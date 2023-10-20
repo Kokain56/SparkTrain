@@ -11,7 +11,7 @@ object Main {
       .master("local")
       .getOrCreate()
 
-    val salesDF = readDF
+    val salesDF = readDF()
 
     val finalDF = salesDF.transform(groupSales)
 
@@ -19,10 +19,9 @@ object Main {
     spark.stop()
   }
 
-  def readDF(implicit
-      spark: SparkSession,
+  def readDF(
       path: String = "src/main/resources/sales.csv"
-  ): DataFrame =
+  )(implicit spark: SparkSession): DataFrame =
     spark.read
       .option("inferSchema", "true")
       .option("header", "true")
